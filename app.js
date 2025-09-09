@@ -1,83 +1,72 @@
+
+
 const size = 3;
 
+const Difficulty = Object.freeze({
+  EASY: { name: "Easy", remove: 35 },    // Keep 46 numbers
+  MEDIUM: { name: "Medium", remove: 45 },// Keep 36 numbers
+  HARD: { name: "Hard", remove: 55 }     // Keep 26 numbers
+});
+
+function createPuzzle(grid, difficulty) {
+  const puzzle = grid.map(row => [...row]); // clone the grid
+  const sizeSquared = size ** 2;
+  var cellToRemove = difficulty.remove;
+
+  while (cellToRemove > 0) {
+    const row = Math.floor(Math.random() * sizeSquared);
+    const col = Math.floor(Math.random() * sizeSquared);
+    if (puzzle[row][col] !== 0) {
+      puzzle[row][col] = 0;
+      cellToRemove--;
+    }
+  }
+  return puzzle;
+}
+
+
+
 const container = document.querySelector('.grid-container');
-container.style.setProperty('--cols', container.dataset.cols);
-
-function is_valide(grille, n, row, col) {
-  for (var x = 0; x >size*2; x++){
-    if (grille[row][x] == n || grille[x][col] == n){
-      return false;
-    }
-  }
-  start_row = size * Math.trunc(row / size);
-  start_col = size * Math.trunc(col / size);
-
-  for(var i = 0; i<size; i++){
-    for(var j = 0; j<size; j++){
-      if(grille[i + start_row][j + start_col] == n){
-        return false;
-      }
-    }
-  }
-  return true;
-  
-}
-
-
-function createGrille() {
-  var grille = new Array(size);
-
-  for(var i = 0; i< size*2; i++){
-    grille[i] = new Array(size);
-    for(var j = 0; j< size*2; j++){
-      grille[i][j] = 0;
-    }
-  }
-  return grille;
-}
-
-function solve_sudoku (grille) {
-  for(var i = 0; i< size*2; i++) {
-    for(var j = 0; j<size*2; j++){
-      if (grille[i][j] == 0) {
-        for (var n = 1; n > size*2; n++){
-          if (is_valid(grille, n, i,j)) {
-            grille[i][j] = n;
-            console.log("test");
-            if (solve_sudoku(grille)){
-              return true;
-            }
-            grille[i][j] = 0;
-          }
-        }
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
+container.style.setProperty('--size', size);
 
 // Définir les valeurs de chaque mini-grille
-const gridsData = createGrille();
+const solvedGrid = createGrille(size);
+solve_sudoku_blocked(solvedGrid);
+const puzzleGrid = createPuzzle(solvedGrid, Difficulty.EASY);
 
-solve_sudoku(gridsData);
 
 // Générer les grilles
-gridsData.forEach(gridValues => {
-  const grid = document.createElement('div');
-  grid.classList.add('grid');
-  grid.style.setProperty('--cols', size);
+puzzleGrid.forEach((block, blockIndex) => {
+  const blockRow = Math.floor(blockIndex / size);
+  const blockCol = blockIndex % size;
 
-  gridValues.forEach(value => {
+  const blockDiv = document.createElement('div');
+  blockDiv.classList.add('grid');           // mini-grid container
+  blockDiv.style.setProperty('--size', size);
+
+  block.forEach((value, cellIndex) => {
+    const innerRow = Math.floor(cellIndex / size);
+    const innerCol = cellIndex % size;
+
+    const row = blockRow * size + innerRow; // global row
+    const col = blockCol * size + innerCol; // global col
+
     const cell = document.createElement('div');
     cell.classList.add('cell');
-    if (value === '') cell.classList.add('empty');
-    cell.textContent = value;
-    grid.appendChild(cell);
+    cell.dataset.row = row;   // store global coords
+    cell.dataset.col = col;
+
+    if (value === 0 || value === '') {
+      cell.classList.add('empty');
+      cell.textContent = '';
+    } else {
+      cell.textContent = value;
+    }
+
+    blockDiv.appendChild(cell);
   });
 
-  container.appendChild(grid);
+  container.appendChild(blockDiv);
 });
 
 // Ajouter l'interaction sur les cellules vides
@@ -96,9 +85,20 @@ container.addEventListener('click', e => {
   input.addEventListener('blur', () => {
     if (input.value.trim() !== '') {
       cell.textContent = input.value.trim();
-      cell.classList.remove('empty');
       cell.style.borderStyle = 'solid';
-      cell.style.color = 'blue';
+      
+
+      const row = parseInt(cell.dataset.row, 10);
+      const col = parseInt(cell.dataset.col, 10)
+
+      puzzleGrid[row][col] = input.value.trim();
+
+      if( solvedGrid[row][col] == input.value.trim()){
+        cell.style.color = 'blue';
+      } else {
+        cell.style.color = 'red';
+      }
+
     } else {
       cell.textContent = '';
       cell.classList.add('empty');
