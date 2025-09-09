@@ -9,13 +9,14 @@ body {
 }
 
 .grid-container {
-    display: grid;
-    gap: 10px;
+    gap: 6px;
+    padding: 6px;
     background: #e5e7eb;
     border-radius: 8px;
     border: 4px solid black;
     grid-template-columns: repeat(var(--size, 2), 1fr);
     grid-template-rows: repeat(var(--size, 2), 1fr);
+    display: none;
 }
 
 .grid {
@@ -27,6 +28,7 @@ body {
     border: 4px solid black;
     grid-template-columns: repeat(var(--size, 2), 1fr);
     grid-template-rows: repeat(var(--size, 2), 1fr);
+    
 }
 
 .cell {
@@ -57,4 +59,61 @@ input {
     text-align: center;
     border: none;
     outline: none;
+}
+
+#HomeButton {
+    position: fixed;
+    bottom: 0;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: none;
+}
+
+#HomeButton:hover {
+    background-color: #0056b3;
+}
+
+/* SOLUTION */
+#showSolution {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: none;
+}
+
+#showSolution:hover {
+    background-color: #0056b3;
+}
+
+/* HOME PAGE*/
+#homePage {
+    text-align: center;
+}
+
+#homePage button {
+    padding: 12px 24px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+#homePage button:hover {
+    background-color: #0056b3;
 }

@@ -9,11 +9,33 @@
 </head>
 
 <body>
-    <div class="grid-container" data-cols="2"></div>
+    <!-- Page d'accueil -->
+    <div id="homePage">
+        <h1>Bienvenue sur mon jeu !</h1>
+        <p>Cliquez sur "Jouer" pour commencer.</p>
+        <button class="playBtn" data-level="easy">Facile</button>
+        <button class="playBtn" data-level="medium">Moyen</button>
+        <button class="playBtn" data-level="hard">Difficile</button>
+    </div>
+
+    <!-- Grille de solution -->
+    <div id="solutionGrid" class="grid-container"></div>
+    <button id="showSolution">Solution</button>
+
+    <!-- Grille du jeu -->
+    <div class="grid-container" id="gameGrid"></div>
+    <button id="HomeButton">Home</button>
+
+
+    <!-- Script -->
     <script src="solver_utils.js"></script>
     <script src="solver_block.js"></script>
     <script src="solver_linear.js"></script>
     <script src="app.js"></script>
+    <script src="soluce.js"></script>
+    <script src="homepage.js"></script>
+
+
 
 </body>
 

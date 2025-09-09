@@ -1,5 +1,3 @@
-
-
 const size = 3;
 
 const Difficulty = Object.freeze({
@@ -8,9 +6,9 @@ const Difficulty = Object.freeze({
   HARD: { name: "Hard", remove: 55 }     // Keep 26 numbers
 });
 
-function createPuzzle(grid, difficulty) {
+function createPuzzle(grid, difficulty, sizeGrid) {
   const puzzle = grid.map(row => [...row]); // clone the grid
-  const sizeSquared = size ** 2;
+  const sizeSquared = sizeGrid ** 2;
   var cellToRemove = difficulty.remove;
 
   while (cellToRemove > 0) {
@@ -26,17 +24,10 @@ function createPuzzle(grid, difficulty) {
 
 
 
-const container = document.querySelector('.grid-container');
-container.style.setProperty('--size', size);
 
-// Définir les valeurs de chaque mini-grille
-const solvedGrid = createGrille(size);
-solve_sudoku_blocked(solvedGrid);
-const puzzleGrid = createPuzzle(solvedGrid, Difficulty.EASY);
-
-
-// Générer les grilles
-puzzleGrid.forEach((block, blockIndex) => {
+function print_grille(grid, container){
+  // Générer les grilles
+  grid.forEach((block, blockIndex) => {
   const blockRow = Math.floor(blockIndex / size);
   const blockCol = blockIndex % size;
 
@@ -68,9 +59,13 @@ puzzleGrid.forEach((block, blockIndex) => {
 
   container.appendChild(blockDiv);
 });
+}
+
+
+
 
 // Ajouter l'interaction sur les cellules vides
-container.addEventListener('click', e => {
+gameGrid.addEventListener('click', e => {
   const cell = e.target;
   if (!cell.classList.contains('empty') || cell.querySelector('input')) return;
 
@@ -89,7 +84,7 @@ container.addEventListener('click', e => {
       
 
       const row = parseInt(cell.dataset.row, 10);
-      const col = parseInt(cell.dataset.col, 10)
+      const col = parseInt(cell.dataset.col, 10);
 
       puzzleGrid[row][col] = input.value.trim();
 
@@ -113,3 +108,5 @@ container.addEventListener('click', e => {
     }
   });
 });
+
+
