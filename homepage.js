@@ -2,7 +2,8 @@ const startBtn = document.getElementById('startGame');
 const homePage = document.getElementById('homePage');
 const gameGrid = document.getElementById('gameGrid');
 const showBtn = document.getElementById('showSolution');
-const homeButton = document.getElementById('HomeButton')
+const homeButton = document.getElementById('HomeButton');
+
 
 
 document.querySelectorAll('.playBtn').forEach(btn => {
@@ -31,7 +32,8 @@ document.querySelectorAll('.playBtn').forEach(btn => {
         solve_sudoku_blocked(solvedGrid, size);
         const puzzleGrid = createPuzzle(solvedGrid, difficulty, size);
 
-        print_grille(puzzleGrid, gameGrid)
+        print_grille(puzzleGrid, gameGrid);
+        print_grille(solvedGrid, solutionGrid);
     });
 });
 
@@ -40,7 +42,10 @@ homeButton.addEventListener('click', () => {
   gameGrid.style.display = 'none';
   homePage.style.display = 'block';
   showBtn.style.display = 'none';
+  solutionGrid.style.display = 'none';
+  button.disabled = false;
 
   gameGrid.innerHTML = '';
+  solutionGrid.innerHTML = '';
 
 });

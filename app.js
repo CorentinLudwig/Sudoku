@@ -57,6 +57,7 @@ function print_grille(grid, container){
     blockDiv.appendChild(cell);
   });
 
+
   container.appendChild(blockDiv);
 });
 }
