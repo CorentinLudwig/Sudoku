@@ -1,9 +1,11 @@
-const startBtn = document.getElementById('startGame');
+
 const homePage = document.getElementById('homePage');
 const gameGrid = document.getElementById('gameGrid');
 const showBtn = document.getElementById('showSolution');
 const homeButton = document.getElementById('HomeButton');
-
+const gamePage = document.getElementById('gamePage');
+let solvedGrid;
+let puzzleGrid;
 
 
 document.querySelectorAll('.playBtn').forEach(btn => {
@@ -21,16 +23,14 @@ document.querySelectorAll('.playBtn').forEach(btn => {
         
 
         homePage.style.display = 'none';
-        gameGrid.style.display = 'grid';
+        gamePage.style.display = 'block';
         gameGrid.style.setProperty('--size', size);
-        showBtn.style.display = 'block';
-        homeButton.style.display = 'block'
 
 
         // Définir les valeurs de chaque mini-grille
-        const solvedGrid = createGrille(size);
+        solvedGrid = createGrille(size); 
         solve_sudoku_blocked(solvedGrid, size);
-        const puzzleGrid = createPuzzle(solvedGrid, difficulty, size);
+        puzzleGrid = createPuzzle(solvedGrid, difficulty, size);
 
         print_grille(puzzleGrid, gameGrid);
         print_grille(solvedGrid, solutionGrid);
@@ -38,11 +38,9 @@ document.querySelectorAll('.playBtn').forEach(btn => {
 });
 
 homeButton.addEventListener('click', () => {  
-  homeButton.style.display = 'none';
-  gameGrid.style.display = 'none';
   homePage.style.display = 'block';
-  showBtn.style.display = 'none';
-  solutionGrid.style.display = 'none';
+  solutionPage.style.display = 'none';
+  gamePage.style.display = 'none';
   button.disabled = false;
 
   gameGrid.innerHTML = '';

@@ -1,4 +1,5 @@
 const size = 3;
+let note = false;
 
 const Difficulty = Object.freeze({
   EASY: { name: "Easy", remove: 35 },    // Keep 46 numbers
